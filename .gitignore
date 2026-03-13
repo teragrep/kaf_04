@@ -1,0 +1,4 @@
+/target/
+/rpm/target/
+/.idea/
+/.flattened-pom.xml

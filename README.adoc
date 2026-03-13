@@ -1,35 +1,33 @@
-// Before publishing your new repository:
-// 1. Write the readme file
-// 2. Update the issues link in Contributing section in the readme file
-// 3. Update the discussion link in config.yml file in .github/ISSUE_TEMPLATE directory
-
-= repo-template
-
-// Add a short description of your project. Tell what your project does and what it's used for.
-
-This is a template repository for Teragrep organization.
+= Teragrep Authorization Module for Apache Kafka
 
 == Features
 
-// List your project's features
+Same Teragrep authorization format as used in link:https://github.com/teragrep/pth_05/[pth_05]
+
+Teragrep Kafka Authorizer authorizes Kafka authenticated users to access the topics according to the authorize.json rules.
+
+== Configuration
+
+Groups which are authorized to access topics reside in `/opt/teragrep/kaf_04/etc/authorize.json` file.
+
+Cluster user must be provided in `/opt/teragrep/kaf_04/etc/cluster.json` file.
+
+Writer user must be provided in `/opt/teragrep/kaf_04/etc/writer.json` file.
 
 == Documentation
 
 See the official documentation on https://docs.teragrep.com[docs.teragrep.com].
 
-== Limitations
+== How to use
 
-// If your project has limitations, please list them. Otherwise remove this section.
-
-== How to [compile/use/implement]
-
-// add instructions how people can start to use your project
+[source,shell script]
+----
+CLASSPATH=/opt/teragrep/kaf_04/share/kaf_04.jar kafka-server-start.sh
+----
 
 == Contributing
 
-// Change the repository name in the issues link to match with your project's name
-
-You can involve yourself with our project by https://github.com/teragrep/repo-template/issues/new/choose[opening an issue] or submitting a pull request.
+You can involve yourself with our project by https://github.com/teragrep/kaf_04/issues/new/choose[opening an issue] or submitting a pull request.
 
 Contribution requirements:
 

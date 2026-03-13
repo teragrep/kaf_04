@@ -1,0 +1,8 @@
+[
+  {
+    "group": "root",
+    "allowedIndexes": [
+      "example_index"
+    ]
+  }
+]
