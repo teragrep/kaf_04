@@ -73,9 +73,6 @@
         <version>2.30.0</version>
         <configuration>
           <java>
-            <excludes>
-              <exclude>src/main/java/com/teragrep/kaf_04/TeragrepKafkaAuthorizer.java</exclude>
-            </excludes>
             <toggleOffOn></toggleOffOn>
             <eclipse>
               <file>${project.basedir}/eclipse-java-formatter.xml</file>
@@ -213,8 +210,6 @@
             <exclude>rpm/rpm.pom.xml</exclude>
             <!-- readme -->
             <exclude>README.adoc</exclude>
-            <!-- External license -->
-            <exclude>src/main/java/com/teragrep/kaf_04/TeragrepKafkaAuthorizer.java</exclude>
           </excludes>
         </configuration>
         <executions>
