@@ -42,7 +42,7 @@ jobs:
       - name: Download latest kaf_06 rpm
         run: gh release download release --repo teragrep/kaf_06 --dir rpm/
         env:
-          GH_TOKEN: ${{ secrets.GH_API_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2.5.0
