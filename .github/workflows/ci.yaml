@@ -32,23 +32,23 @@ jobs:
           echo "${{ secrets.RPM_SIGNING_PRIVATE_KEY }}" | gpg --batch --import;
           echo "%_gpg_sign_cmd_extra_args --pinentry-mode loopback --passphrase \"%{getenv:RPM_SIGNING_PASSPHRASE}\"" >> "${HOME}/.rpmmacros";
 
+      - name: Download latest kaf_06 rpm
+        run: gh release download --repo teragrep/kaf_06 --dir src/test/integration/rpm/ --pattern "*.rpm"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - name: Build RPM for integration tests
-        run: cd rpm/ && mvn --batch-mode -Drevision=${{ github.run_id }} -Dsha1= -Dchangelist= -f rpm.pom.xml package
+        run: cd rpm/ && mvn --batch-mode -Drevision=${{ github.run_id }} -Dsha1= -Dchangelist= -f rpm.pom.xml package && find target/ -type f -name "*.rpm" -exec mv {} src/test/integration/rpm/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RPM_SIGNING_KEYNAME: ${{ env.RPM_SIGNING_KEYNAME }}
           RPM_SIGNING_PASSPHRASE: ${{ secrets.RPM_SIGNING_PASSPHRASE }}
 
-      - name: Download latest kaf_06 rpm
-        run: gh release download --repo teragrep/kaf_06 --dir rpm/ --pattern "*.rpm"
-        env:
-          GH_TOKEN: ${{ github.token }}
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2.5.0
 
       - name: Build integration test image
-        run: cd ./src/test/integration && docker buildx build --output type=docker --tag integration-test:latest  .
+        run: cd src/test/integration/ && docker buildx build --output type=docker --tag integration-test:latest  .
 
       - name: Run integration tests
         run: docker run --interactive integration-test:latest
