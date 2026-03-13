@@ -4,7 +4,7 @@
 
 Same Teragrep authorization format as used in link:https://github.com/teragrep/pth_05/[pth_05]
 
-Teragrep Kafka Authorizer authorizes Kafka authenticated users to access the topics according to the authorize.json rules.
+Teragrep Kafka Authorizer authorizes Kafka authenticated users to access the topics according to the `authorize.json` rules.
 
 == Configuration
 
