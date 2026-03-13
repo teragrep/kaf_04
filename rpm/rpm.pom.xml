@@ -5,7 +5,7 @@
   <packaging>rpm</packaging>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>kaf_04</artifactId>
-  <version>${revision}${sha1}${changelist}.${env.TARGET_OS}</version>
+  <version>${revision}${sha1}${changelist}</version>
   <name>kaf_04</name>
   <description>kaf_04</description>
   <groupId>com.teragrep</groupId>
