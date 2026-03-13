@@ -1,6 +1,7 @@
 FROM rockylinux/rockylinux:8
 
-RUN --mount=type=bind,source=./rpm/,target=/rpm/ dnf -y install /rpm/*.rpm
+# Install dependencies
+RUN --mount=type=bind,source=./rpm/,target=/rpm/ dnf -y install /rpm/*.rpm nc
 
 # Copy configs
 COPY config/ /config/
