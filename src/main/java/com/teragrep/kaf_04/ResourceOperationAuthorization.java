@@ -59,8 +59,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 
 public final class ResourceOperationAuthorization {
@@ -80,20 +82,23 @@ public final class ResourceOperationAuthorization {
             String clusterPath,
             String writerPath,
             String identitySuffixPath
-    ) throws FileNotFoundException {
+    ) throws IOException {
         final Gson gson = new Gson();
         this.logRenderer = new Log();
         this.authorizationInfoProcessor = new ReloadingAuthorizationInfoProcessor(authorizePath, 300);
 
-        final BufferedReader clusterUsernameReader = new BufferedReader(new FileReader(clusterPath));
+        final BufferedReader clusterUsernameReader = Files
+                .newBufferedReader(Paths.get(clusterPath), StandardCharsets.UTF_8);
         this.clusterUsername = gson.fromJson(clusterUsernameReader, Username.class);
 
-        final BufferedReader writerUsernameReader = new BufferedReader(new FileReader(writerPath));
+        final BufferedReader writerUsernameReader = Files
+                .newBufferedReader(Paths.get(writerPath), StandardCharsets.UTF_8);
         this.writerUsername = gson.fromJson(writerUsernameReader, Username.class);
 
         String identitySuffixString = "";
         try {
-            final BufferedReader identitySuffixReader = new BufferedReader(new FileReader(identitySuffixPath));
+            final BufferedReader identitySuffixReader = Files
+                    .newBufferedReader(Paths.get(identitySuffixPath), StandardCharsets.UTF_8);
             IdentitySuffix identitySuffixObj = gson.fromJson(identitySuffixReader, IdentitySuffix.class);
             identitySuffixString = identitySuffixObj.identitySuffix;
         }
