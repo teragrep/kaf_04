@@ -45,7 +45,6 @@
  */
 package com.teragrep.kaf_04;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -130,7 +129,7 @@ public class TeragrepKafkaAuthorizer implements ClusterMetadataAuthorizer {
             initialized = true;
             logger.info("TeragrepKafkaAuthorizer initialized.");
         }
-        catch (FileNotFoundException e) {
+        catch (IOException e) {
             logger.warn("Failed to create Authorizer object: ", e);
         }
         return authorizerServerInfo
