@@ -102,7 +102,7 @@ public class TeragrepKafkaAuthorizer implements ClusterMetadataAuthorizer {
     private String getPath(Map<String, ?> configs, String property, String fallback) {
         final Object config = configs.get(property);
         final String path;
-        if (config instanceof String && config != "") {
+        if (config instanceof String && !config.equals("")) {
             path = (String) config;
             logger.info("Resolved property <[{}]> to <[{}]>", property, path);
         }
