@@ -43,7 +43,7 @@
         <configuration>
           <rules>
             <requireJavaVersion>
-              <version>1.8</version>
+              <version>11</version>
             </requireJavaVersion>
           </rules>
         </configuration>
@@ -124,7 +124,7 @@
             </mapping>
           </mappings>
           <requires>
-            <require>java-1.8.0-openjdk</require>
+            <require>java-11-openjdk-headless</require>
           </requires>
           <preinstallScriptlet>
             <script>
