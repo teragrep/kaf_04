@@ -196,9 +196,12 @@ public final class ResourceOperationAuthorization {
             final String userName
     ) {
         return userName.equals(clusterUsername.username)
-                && ((AclOperation.ALTER.equals(operation) || AclOperation.ALTER_CONFIGS.equals(operation) || AclOperation.CLUSTER_ACTION.equals(operation) || AclOperation.CREATE.equals(operation) || AclOperation.DESCRIBE.equals(operation) || AclOperation.DESCRIBE_CONFIGS.equals(operation) || AclOperation.IDEMPOTENT_WRITE.equals(operation)) && ResourceType.CLUSTER.equals(resourcePattern.resourceType())) || (
-        // to recover from under-replicated topics
-        AclOperation.DESCRIBE.equals(operation) && ResourceType.TOPIC.equals(resourcePattern.resourceType()));
+                // CLUSTER resource permissions
+                && (((AclOperation.ALTER.equals(operation) || AclOperation.ALTER_CONFIGS.equals(operation) || AclOperation.CLUSTER_ACTION.equals(operation) || AclOperation.CREATE.equals(operation) || AclOperation.DESCRIBE.equals(operation) || AclOperation.DESCRIBE_CONFIGS.equals(operation) || AclOperation.IDEMPOTENT_WRITE.equals(operation)) && ResourceType.CLUSTER.equals(resourcePattern.resourceType())) ||
+                // TOPIC resource permissions
+                        ((AclOperation.DESCRIBE.equals(operation) || AclOperation.CREATE.equals(operation)
+                                || AclOperation.ALTER.equals(operation) || AclOperation.DELETE.equals(operation))
+                                && ResourceType.TOPIC.equals(resourcePattern.resourceType())));
     }
 
     private boolean isTopicWriteUser(
