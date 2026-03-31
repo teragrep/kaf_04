@@ -195,13 +195,32 @@ public final class ResourceOperationAuthorization {
             final ResourcePattern resourcePattern,
             final String userName
     ) {
-        return userName.equals(clusterUsername.username)
-                // CLUSTER resource permissions
-                && (((AclOperation.ALTER.equals(operation) || AclOperation.ALTER_CONFIGS.equals(operation) || AclOperation.CLUSTER_ACTION.equals(operation) || AclOperation.CREATE.equals(operation) || AclOperation.DESCRIBE.equals(operation) || AclOperation.DESCRIBE_CONFIGS.equals(operation) || AclOperation.IDEMPOTENT_WRITE.equals(operation)) && ResourceType.CLUSTER.equals(resourcePattern.resourceType())) ||
-                // TOPIC resource permissions
-                        ((AclOperation.DESCRIBE.equals(operation) || AclOperation.CREATE
-                                .equals(operation) || AclOperation.ALTER.equals(operation)
-                                || AclOperation.DELETE.equals(operation) || AclOperation.READ.equals(operation) || AclOperation.WRITE.equals(operation)) && ResourceType.TOPIC.equals(resourcePattern.resourceType())));
+        return userName.equals(clusterUsername.username) && (isClusterOperation(
+                authorizableRequestContext, operation, resourcePattern, userName
+        ) || isTopicOperation(authorizableRequestContext, operation, resourcePattern, userName));
+    }
+
+    private boolean isClusterOperation(
+            final AuthorizableRequestContext authorizableRequestContext,
+            final AclOperation operation,
+            final ResourcePattern resourcePattern,
+            final String userName
+    ) {
+        return
+        // CLUSTER resource permissions
+        ((AclOperation.ALTER.equals(operation) || AclOperation.ALTER_CONFIGS.equals(operation)
+                || AclOperation.CLUSTER_ACTION.equals(operation) || AclOperation.CREATE.equals(operation) || AclOperation.DESCRIBE.equals(operation) || AclOperation.DESCRIBE_CONFIGS.equals(operation) || AclOperation.IDEMPOTENT_WRITE.equals(operation)) && ResourceType.CLUSTER.equals(resourcePattern.resourceType()));
+    }
+
+    private boolean isTopicOperation(
+            final AuthorizableRequestContext authorizableRequestContext,
+            final AclOperation operation,
+            final ResourcePattern resourcePattern,
+            final String userName
+    ) {
+        return (AclOperation.DESCRIBE.equals(operation) || AclOperation.CREATE.equals(operation) || AclOperation.ALTER
+                .equals(operation) || AclOperation.DELETE.equals(operation) || AclOperation.READ.equals(operation)
+                || AclOperation.WRITE.equals(operation) || AclOperation.DESCRIBE_CONFIGS.equals(operation) || AclOperation.ALTER_CONFIGS.equals(operation)) && ResourceType.TOPIC.equals(resourcePattern.resourceType());
     }
 
     private boolean isTopicWriteUser(
