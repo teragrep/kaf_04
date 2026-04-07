@@ -135,7 +135,15 @@ public final class ResourceOperationAuthorization {
         }
         if (isTopicDescribe(authorizableRequestContext, operation, resourcePattern)) {
             // topic describes give only metadata and are permitted for all
-            logger.debug(logRenderer.authorization(authorizableRequestContext, operation, resourcePattern, true, null));
+            if (logger.isDebugEnabled()) {
+                logger
+                        .debug(
+                                logRenderer
+                                        .authorization(
+                                                authorizableRequestContext, operation, resourcePattern, true, null
+                                        )
+                        );
+            }
             return AuthorizationResult.ALLOWED;
         }
 
