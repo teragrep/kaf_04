@@ -133,6 +133,12 @@ public final class ResourceOperationAuthorization {
             logger.debug(logRenderer.authorization(authorizableRequestContext, operation, resourcePattern, true, null));
             return AuthorizationResult.ALLOWED;
         }
+        if (isTopicDescribe(authorizableRequestContext, operation, resourcePattern)) {
+            // topic describes give only metadata and are permitted for all
+            logger.debug(logRenderer.authorization(authorizableRequestContext, operation, resourcePattern, true, null));
+            return AuthorizationResult.ALLOWED;
+        }
+
         if (isTopicWriteUser(authorizableRequestContext, operation, resourcePattern, userName)) {
             logger.debug(logRenderer.authorization(authorizableRequestContext, operation, resourcePattern, true, null));
             return AuthorizationResult.ALLOWED;
@@ -156,10 +162,7 @@ public final class ResourceOperationAuthorization {
             return AuthorizationResult.ALLOWED;
         }
 
-        if (
-            isTopicRead(authorizableRequestContext, operation, resourcePattern)
-                    || isTopicDescribe(authorizableRequestContext, operation, resourcePattern)
-        ) {
+        if (isTopicRead(authorizableRequestContext, operation, resourcePattern)) {
             final java.util.HashSet<String> origIdentityMemberOfSet = unixGroupSearch
                     .getGroups(userName + identitySuffix);
             final HashSet<String> identityMemberOfSet = new HashSet<>(origIdentityMemberOfSet);
